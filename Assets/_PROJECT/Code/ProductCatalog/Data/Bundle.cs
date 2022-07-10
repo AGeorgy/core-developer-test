@@ -3,11 +3,13 @@
     public class Bundle : IProductCatalogEntry
     {
         public const uint CONTAINS_MAX = 3;
+
+        public string Type => nameof(Bundle);
         
-        public ItemTypes[] Item { get; }
-        public uint[] Amount { get; }
-        public string Name { get; }
-        public string Description { get; }
-        public uint Price { get; } // In cents
+        public ItemTypes[] Item { get; set; }
+        public uint[] Amount { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public uint Price { get; set; } // In cents
     }
 }

@@ -6,7 +6,7 @@ namespace _PROJECT.Code.ProductCatalog
     {
         public ProductCatalog(ProductCatalogData productCatalogData)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }
