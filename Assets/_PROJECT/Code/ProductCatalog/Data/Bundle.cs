@@ -1,4 +1,4 @@
-﻿namespace _PROJECT.Code.Data
+﻿namespace _PROJECT.Code.ProductCatalog.Data
 {
     public class Bundle : IProductCatalogEntry
     {
