@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using _PROJECT.Code.ProductCatalog.Data;
 
 namespace _PROJECT.Code.ProductCatalog
 {
@@ -10,6 +12,11 @@ namespace _PROJECT.Code.ProductCatalog
         private readonly int _right;
         private readonly bool _isAscendant;
 
+        public static IReadOnlyList<T> Empty()
+        {
+            return new Range<T>(Array.Empty<T>(), -1, 0, true);
+        }
+        
         public Range(T[] data, int left, int right, bool isAscendant)
         {
             _data = data;

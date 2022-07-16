@@ -7,12 +7,20 @@ namespace _PROJECT.Code.ProductCatalog
     {
         private readonly T[] _data;
 
+        private ProductCatalogBase()
+        {
+            _data = Array.Empty<T>();
+        }
+        
         protected ProductCatalogBase(T[] data)
         {
-            _data = data;
+            if(data == null) 
+                _data = Array.Empty<T>();
+            else
+                _data = data;
         }
 
-        protected T[] Sort<TKey>(Func<T, TKey> selector, Comparer<TKey> comparer)
+        protected (T[] SortedData, TKey[] Keys)  Sort<TKey>(Func<T, TKey> selector, Comparer<TKey> comparer)
         {
             var sortedData = new T[_data.Length];
             var keys = new TKey[_data.Length];
@@ -23,7 +31,12 @@ namespace _PROJECT.Code.ProductCatalog
             }
 
             Array.Sort(keys, sortedData, 0, sortedData.Length, comparer);
-            return sortedData;
+            return (sortedData, keys);
+        }
+
+        protected int Filter<TKey>(TKey key, (T[] SortedData, TKey[] Keys) sortResult, Comparer<TKey> comparer)
+        {
+            return Array.BinarySearch(sortResult.Keys, key, comparer);
         }
     }
 }

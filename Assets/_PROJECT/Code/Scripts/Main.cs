@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using _PROJECT.Code.ProductCatalog;
 using _PROJECT.Code.ProductCatalog.Data;
 using UnityEngine;
@@ -17,12 +16,12 @@ namespace _PROJECT.Code.Scripts
             var loader = new ProductCatalogLoader(json);
             var productCatalog = loader.Build();
 
-            // Range r1 = productCatalog.SortByPrice();
-            // Range r2 = productCatalog.SortByName(false);
-            IReadOnlyList<IProductCatalogEntry> r3 = productCatalog.SortBy(entry => entry.Item.FirstOrDefault(), Comparer<ItemTypes>.Default, false);
+            IReadOnlyList<IProductCatalogEntry> r1 = productCatalog.SortByPrice();
+            IReadOnlyList<IProductCatalogEntry> r2 = productCatalog.SortByName(false);
+            IReadOnlyList<IProductCatalogEntry> r3 = productCatalog.SortBy(entry => entry.Item, new ItemComparer(), false);
             //
-            // Range r4 = productCatalog.FilterByItem(ItemTypes.Gems);
-            // Range r5 = productCatalog.FilterBy(entry => entry.Price, System.Collections.Generic.Comparer<uint>.Default, 100, false);
+            IReadOnlyList<IProductCatalogEntry> r4 = productCatalog.FilterByItem(new []{ItemTypes.Gems});
+            IReadOnlyList<IProductCatalogEntry> r5 = productCatalog.FilterBy<uint>(100, entry => entry.Price, Comparer<uint>.Default, false);
         }
     }
 }
