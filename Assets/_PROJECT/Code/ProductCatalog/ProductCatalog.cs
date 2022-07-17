@@ -10,24 +10,32 @@ namespace _PROJECT.Code.ProductCatalog
         {
         }
 
-        public IReadOnlyList<IProductCatalogEntry> SortBy<TKey>(Func<IProductCatalogEntry, TKey> selector, Comparer<TKey> comparer, bool isAscendant = true)
+        public IReadOnlyList<IProductCatalogEntry> SortBy<TKey>(Func<IProductCatalogEntry, TKey> selector,
+            Comparer<TKey> comparer, bool isAscendant = false)
         {
             var sortResult = Sort(selector, comparer);
             return new Range<IProductCatalogEntry>(sortResult.SortedData, 0, sortResult.SortedData.Length - 1, isAscendant);
         }
 
-        public IReadOnlyList<IProductCatalogEntry> FilterBy<TKey>(TKey key, Func<IProductCatalogEntry, TKey> selector, Comparer<TKey> comparer, bool isAscendant = true)
+        public IReadOnlyList<IProductCatalogEntry> FilterBy<TKey>(TKey key, Func<IProductCatalogEntry, TKey> selector,
+            Comparer<TKey> comparer, bool isAscendant = false)
         {
             var sortResult = Sort(selector, comparer);
             var startIndex = Filter(key, sortResult, comparer);
-            
-            return startIndex < 0 ? 
-                Range<IProductCatalogEntry>.Empty() : 
-                new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, sortResult.SortedData.Length - 1, isAscendant);
+
+            return startIndex < 0
+                ? new Range<IProductCatalogEntry>(sortResult.SortedData, ~startIndex, sortResult.SortedData.Length - 1, isAscendant)
+                : new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, sortResult.SortedData.Length - 1,
+                    isAscendant);
         }
 
-        public IReadOnlyList<IProductCatalogEntry> FilterBy<TKey>(TKey keyStart, TKey keyEnd, Func<IProductCatalogEntry, TKey> selector, Comparer<TKey> comparer, bool isAscendant = true)
+        public IReadOnlyList<IProductCatalogEntry> FilterBy<TKey>(TKey keyStart, TKey keyEnd,
+            Func<IProductCatalogEntry, TKey> selector, Comparer<TKey> comparer, bool isAscendant = false)
         {
+            if (Comparer<TKey>.Default.Compare(keyStart, keyEnd) > 0)
+            {
+                (keyStart, keyEnd) = (keyEnd, keyStart);
+            }
             var sortResult = Sort(selector, comparer);
             var startIndex = Filter(keyStart, sortResult, comparer);
             var endIndex = Filter(keyEnd, sortResult, comparer);

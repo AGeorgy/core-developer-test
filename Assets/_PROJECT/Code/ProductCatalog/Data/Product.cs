@@ -11,5 +11,10 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public uint Price { get; set; } // In cents
+
+        public override string ToString()
+        {
+            return $"{Name}, {Description}, {Price}, {Item[0]}, {Amount[0]}";
+        }
     }
 }

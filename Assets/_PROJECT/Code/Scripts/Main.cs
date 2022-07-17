@@ -16,12 +16,32 @@ namespace _PROJECT.Code.Scripts
             var loader = new ProductCatalogLoader(json);
             var productCatalog = loader.Build();
 
-            IReadOnlyList<IProductCatalogEntry> r1 = productCatalog.SortByPrice();
-            IReadOnlyList<IProductCatalogEntry> r2 = productCatalog.SortByName(false);
-            IReadOnlyList<IProductCatalogEntry> r3 = productCatalog.SortBy(entry => entry.Item, new ItemComparer(), false);
-            //
-            IReadOnlyList<IProductCatalogEntry> r4 = productCatalog.FilterByItem(new []{ItemTypes.Gems});
-            IReadOnlyList<IProductCatalogEntry> r5 = productCatalog.FilterBy<uint>(100, entry => entry.Price, Comparer<uint>.Default, false);
+            IReadOnlyList<IProductCatalogEntry> entries = productCatalog.SortByPrice();
+            // PrintResult(entries, 1);
+            // entries = productCatalog.SortByName(false);
+            // PrintResult(entries, 2);
+            // entries = productCatalog.SortByItems(new []{ItemTypes.Coins, ItemTypes.Gems, ItemTypes.Tickets});
+            // PrintResult(entries, 3);
+            // entries = productCatalog.SortBy(entry => entry.Item,
+            //     new ProductCatalogComparers.ItemComparer(new[] {ItemTypes.Tickets, ItemTypes.Coins, ItemTypes.Gems}),
+            //     false);
+            // PrintResult(entries, 4);
+            // entries = productCatalog.FilterBy<uint>(100, entry => entry.Price, Comparer<uint>.Default);
+            // PrintResult(entries, 5);
+            entries = productCatalog.FilterByCoinsAndTickets();
+            PrintResult(entries, 6);
+            // entries = productCatalog.FilterByCoinsOrTickets();
+            // PrintResult(entries, 7);
+            
+        }
+
+        private static void PrintResult(IEnumerable<IProductCatalogEntry> productCatalogEntries, int index)
+        {
+            Debug.Log($"{index} --------------");
+            foreach (var entry in productCatalogEntries)
+            {
+                Debug.Log(entry);
+            }
         }
     }
 }
