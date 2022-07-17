@@ -20,19 +20,16 @@ namespace _PROJECT.Code.ProductCatalog
             return pc.SortBy(entry => entry.Item, new ProductCatalogComparers.ItemComparer(items), isAscendant);
         }
 
-        public static IReadOnlyList<IProductCatalogEntry> FilterByItem(this ProductCatalog pc, ItemTypes[] item, bool isAscendant = true)
-        {
-            return pc.FilterBy(item, entry => entry.Item, new ProductCatalogComparers.ItemOrComparer(), isAscendant);
-        }
-
         public static IReadOnlyList<IProductCatalogEntry> FilterByCoinsAndTickets(this ProductCatalog pc, bool isAscendant = true)
         {
-            return pc.FilterBy(new[]{ItemTypes.Coins, ItemTypes.Tickets}, entry => entry.Item, new ProductCatalogComparers.ItemAndComparer(), isAscendant);
+            var items = new[] {ItemTypes.Coins, ItemTypes.Tickets};
+            return pc.FilterBy(items, entry => entry.Item, new ProductCatalogComparers.ItemAndComparer(items), isAscendant);
         }
         
         public static IReadOnlyList<IProductCatalogEntry> FilterByCoinsOrTickets(this ProductCatalog pc, bool isAscendant = true)
         {
-            return pc.FilterBy(new[]{ItemTypes.Coins, ItemTypes.Tickets}, entry => entry.Item, new ProductCatalogComparers.ItemOrComparer(), isAscendant);
+            var items = new[] {ItemTypes.Coins, ItemTypes.Tickets};
+            return pc.FilterBy(items, entry => entry.Item, new ProductCatalogComparers.ItemOrComparer(items), isAscendant);
         }
     }
 }

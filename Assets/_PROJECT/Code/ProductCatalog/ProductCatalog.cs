@@ -25,7 +25,7 @@ namespace _PROJECT.Code.ProductCatalog
 
             return startIndex < 0
                 ? new Range<IProductCatalogEntry>(sortResult.SortedData, ~startIndex, sortResult.SortedData.Length - 1, isAscendant)
-                : new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, sortResult.SortedData.Length - 1,
+                : new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex - 1, sortResult.SortedData.Length - 1,
                     isAscendant);
         }
 
@@ -42,17 +42,17 @@ namespace _PROJECT.Code.ProductCatalog
 
             if (startIndex > 0 && endIndex > 0)
             {
-                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, endIndex, isAscendant);
+                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex - 1, endIndex - 1, isAscendant);
             }
 
             if (startIndex < 0 && endIndex > 0)
             {
-                return new Range<IProductCatalogEntry>(sortResult.SortedData, ~startIndex, endIndex, isAscendant);
+                return new Range<IProductCatalogEntry>(sortResult.SortedData, ~startIndex, endIndex - 1, isAscendant);
             }
 
             if (startIndex > 0 && endIndex < 0)
             {
-                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, ~endIndex, isAscendant);
+                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex - 1, ~endIndex, isAscendant);
             }
 
             return Range<IProductCatalogEntry>.Empty();

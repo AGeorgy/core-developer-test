@@ -17,21 +17,21 @@ namespace _PROJECT.Code.Scripts
             var productCatalog = loader.Build();
 
             IReadOnlyList<IProductCatalogEntry> entries = productCatalog.SortByPrice();
-            // PrintResult(entries, 1);
-            // entries = productCatalog.SortByName(false);
-            // PrintResult(entries, 2);
-            // entries = productCatalog.SortByItems(new []{ItemTypes.Coins, ItemTypes.Gems, ItemTypes.Tickets});
-            // PrintResult(entries, 3);
-            // entries = productCatalog.SortBy(entry => entry.Item,
-            //     new ProductCatalogComparers.ItemComparer(new[] {ItemTypes.Tickets, ItemTypes.Coins, ItemTypes.Gems}),
-            //     false);
-            // PrintResult(entries, 4);
-            // entries = productCatalog.FilterBy<uint>(100, entry => entry.Price, Comparer<uint>.Default);
-            // PrintResult(entries, 5);
+            PrintResult(entries, 1);
+            entries = productCatalog.SortByName(false);
+            PrintResult(entries, 2);
+            entries = productCatalog.SortByItems(new []{ItemTypes.Coins, ItemTypes.Gems, ItemTypes.Tickets});
+            PrintResult(entries, 3);
+            entries = productCatalog.SortBy(entry => entry.Item,
+                new ProductCatalogComparers.ItemComparer(new[] {ItemTypes.Tickets, ItemTypes.Coins, ItemTypes.Gems}),
+                false);
+            PrintResult(entries, 4);
+            entries = productCatalog.FilterBy<uint>(100, entry => entry.Price, Comparer<uint>.Default);
+            PrintResult(entries, 5);
             entries = productCatalog.FilterByCoinsAndTickets();
             PrintResult(entries, 6);
-            // entries = productCatalog.FilterByCoinsOrTickets();
-            // PrintResult(entries, 7);
+            entries = productCatalog.FilterByCoinsOrTickets();
+            PrintResult(entries, 7);
             
         }
 

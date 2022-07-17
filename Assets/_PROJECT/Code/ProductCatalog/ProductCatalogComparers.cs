@@ -10,13 +10,17 @@ namespace _PROJECT.Code.ProductCatalog
         {
             private readonly ItemTypes[] _valuesToCompare;
             private readonly int _count;
+            private readonly uint[] _yCounts;
+            private readonly uint[] _xCounts;
 
             public ItemComparer(ItemTypes[] valuesToCompare)
             {
                 _valuesToCompare = valuesToCompare;
                 _count = _valuesToCompare.Length;
+                _yCounts = new uint[_count];
+                _xCounts = new uint[_count];
             }
-            
+
             public override int Compare(ItemTypes[] x, ItemTypes[] y)
             {
                 if (ReferenceEquals(x, y))
@@ -25,77 +29,109 @@ namespace _PROJECT.Code.ProductCatalog
                     return -1;
                 if (y == null)
                     return 1;
-                
-                var yCounts = new uint[_count];
-                var xCounts = new uint[_count];
 
+                Array.Clear(_yCounts, 0, _count);
+                Array.Clear(_xCounts, 0, _count);
+                
                 for (var iCounts = 0; iCounts < _count; iCounts++)
                 {
                     var valueToCompare = _valuesToCompare[iCounts];
                     for (var i = 0; i < x.Length; i++)
                     {
-                        if (0 == valueToCompare.CompareTo(x[i])) xCounts[iCounts]++;
+                        if (0 == valueToCompare.CompareTo(x[i])) _xCounts[iCounts]++;
                     }
 
                     for (var i = 0; i < y.Length; i++)
                     {
-                        if (0 == valueToCompare.CompareTo(y[i])) yCounts[iCounts]++;
+                        if (0 == valueToCompare.CompareTo(y[i])) _yCounts[iCounts]++;
                     }
                 }
 
                 for (var i = 0; i < _count; i++)
                 {
-                    if (xCounts[i] > yCounts[i]) return 1;
-                    if (xCounts[i] < yCounts[i]) return -1;
+                    if (_xCounts[i] > _yCounts[i]) return 1;
+                    if (_xCounts[i] < _yCounts[i]) return -1;
                 }
 
                 return 0;
             }
         }
 
-    public class ItemOrComparer : Comparer<ItemTypes[]>
+        public class ItemOrComparer : Comparer<ItemTypes[]>
         {
+            private readonly ItemTypes[] _valuesToCompare;
+            private readonly int _count;
+            private bool _isAnyX;
+            private bool _isAnyY;
+
+            public ItemOrComparer(ItemTypes[] valuesToCompare)
+            {
+                _valuesToCompare = valuesToCompare;
+                _count = _valuesToCompare.Length;
+            }
+            
             public override int Compare(ItemTypes[] x, ItemTypes[] y)
             {
-                var comparisionCount = 0;
-                if (x != null && y != null)
+                _isAnyX = _isAnyY = false;
+                
+                for (var iCounts = 0; iCounts < _count; iCounts++)
                 {
+                    var valueToCompare = _valuesToCompare[iCounts];
                     for (var i = 0; i < x.Length; i++)
                     {
-                        for (var j = 0; j < y.Length; j++)
-                        {
-                            if (0 == x[i].CompareTo(y[j])) comparisionCount++;
-                        }
+                        if (0 == valueToCompare.CompareTo(x[i])) _isAnyX = true;
                     }
-                    
-                    if (comparisionCount == 1) return 0;
-                    if (comparisionCount > 1) return 1;
+
+                    for (var i = 0; i < y.Length; i++)
+                    {
+                        if (0 == valueToCompare.CompareTo(y[i])) _isAnyY = true;
+                    }
                 }
 
-                return -1;
+                if (!_isAnyX && _isAnyY) return -1;
+                if (_isAnyX && !_isAnyY) return 1;
+
+                return 0;
             }
         }
 
         public class ItemAndComparer : Comparer<ItemTypes[]>
         {
+            private readonly ItemTypes[] _valuesToCompare;
+            private readonly int _count;
+            private readonly HashSet<int> _xCount;
+            private readonly HashSet<int> _yCount;
+
+            public ItemAndComparer(ItemTypes[] valuesToCompare)
+            {
+                _valuesToCompare = valuesToCompare;
+                _count = _valuesToCompare.Length;
+                _xCount = new HashSet<int>();
+                _yCount = new HashSet<int>();
+            }
             public override int Compare(ItemTypes[] x, ItemTypes[] y)
             {
-                var comparisionCount = 0;
-                if (x != null && y != null)
+                _xCount.Clear();
+                _yCount.Clear();
+
+                for (var iCounts = 0; iCounts < _count; iCounts++)
                 {
+                    var valueToCompare = _valuesToCompare[iCounts];
                     for (var i = 0; i < x.Length; i++)
                     {
-                        for (var j = 0; j < y.Length; j++)
-                        {
-                            if (0 == x[i].CompareTo(y[j])) comparisionCount++;
-                        }
+                        if (0 == valueToCompare.CompareTo(x[i])) _xCount.Add(iCounts);
                     }
-                    
-                    if (comparisionCount == x.Length && comparisionCount == y.Length) return 0;
-                    if (comparisionCount == Math.Min(x.Length, y.Length) && comparisionCount < Math.Max(x.Length, y.Length)) return 1;
+
+                    for (var i = 0; i < y.Length; i++)
+                    {
+                        if (0 == valueToCompare.CompareTo(y[i])) _yCount.Add(iCounts);
+                    }
                 }
 
-                return -1;
+                if (_xCount.Count > _yCount.Count) return 1;
+                if (_yCount.Count > _xCount.Count) return -1;
+
+                return 0;
             }
         }
     }
