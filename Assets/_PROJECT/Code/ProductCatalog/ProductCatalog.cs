@@ -42,20 +42,27 @@ namespace _PROJECT.Code.ProductCatalog
 
             if (startIndex > 0 && endIndex > 0)
             {
-                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex - 1, endIndex - 1, isAscendant);
+                startIndex -= 1;
+                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, endIndex, isAscendant);
             }
 
             if (startIndex < 0 && endIndex > 0)
             {
-                return new Range<IProductCatalogEntry>(sortResult.SortedData, ~startIndex, endIndex - 1, isAscendant);
+                startIndex = ~startIndex;
+                endIndex -= 1;
+                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, endIndex, isAscendant);
             }
 
             if (startIndex > 0 && endIndex < 0)
             {
-                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex - 1, ~endIndex, isAscendant);
+                startIndex -= 1;
+                endIndex = ~endIndex;
+                return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, endIndex, isAscendant);
             }
 
-            return Range<IProductCatalogEntry>.Empty();
+            startIndex = ~startIndex;
+            endIndex = ~endIndex;
+            return new Range<IProductCatalogEntry>(sortResult.SortedData, startIndex, endIndex - 1, isAscendant);
         }
     }
 }

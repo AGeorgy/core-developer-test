@@ -32,6 +32,8 @@ namespace _PROJECT.Code.Scripts
             PrintResult(entries, 6);
             entries = productCatalog.FilterByCoinsOrTickets();
             PrintResult(entries, 7);
+            entries = productCatalog.FilterBy<uint>(50, 150, entry => entry.Price, Comparer<uint>.Default);
+            PrintResult(entries, 8);
             
         }
 
