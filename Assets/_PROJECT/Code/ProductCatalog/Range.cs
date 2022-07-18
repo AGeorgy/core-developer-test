@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _PROJECT.Code.ProductCatalog.Data;
 
 namespace _PROJECT.Code.ProductCatalog
 {

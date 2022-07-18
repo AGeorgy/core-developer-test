@@ -4,7 +4,7 @@ using _PROJECT.Code.ProductCatalog.Data;
 
 namespace _PROJECT.Code.ProductCatalog
 {
-    public class ProductCatalog : ProductCatalogBase<IProductCatalogEntry>
+    public sealed class ProductCatalog : ProductCatalogBase<IProductCatalogEntry>
     {
         public ProductCatalog(ProductCatalogData productCatalogData) : base(productCatalogData.Entries)
         {
