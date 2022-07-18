@@ -4,3 +4,5 @@ The product catalog implementation is using default 'Array.Sort' and 'Array.Bina
 2. Use more suitable data structure instead of array.
 3. Which could lead to custom Sort and BinarySearch.
 Writing a special (faster) version of ProductCatalog only for structs. It opens doors for using Span, NativeCollections, e.t.c.
+
+Example: https://github.com/AGeorgy/product-catalog-example
