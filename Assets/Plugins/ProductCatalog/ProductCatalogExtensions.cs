@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
-using _PROJECT.Code.ProductCatalog.Data;
+using ProductCatalog.Data;
 
-namespace _PROJECT.Code.ProductCatalog
+namespace ProductCatalog
 {
+    /// <summary>
+    /// Extend basic functionality of ProductCatalog putting those supplies to this partial class.
+    /// It allows to marge new extensions to ProductCatalog package with no pain.
+    /// </summary>
     public static partial class ProductCatalogExtensions
     {
         public static IReadOnlyList<IProductCatalogEntry> SortByName(this ProductCatalog pc, bool isAscendant = true)

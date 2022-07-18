@@ -1,8 +1,12 @@
-﻿using _PROJECT.Code.ProductCatalog.Data;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using ProductCatalog.Data;
 
-namespace _PROJECT.Code.ProductCatalog
+namespace ProductCatalog
 {
+    /// <summary>
+    /// This class might implement any other functionality. But now it's simple, cause the meaning of it existing is to
+    /// show the separation ProductCatalog from data loading.
+    /// </summary>
     public class ProductCatalogLoader
     {
         private readonly string _json;

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace _PROJECT.Code.ProductCatalog.Data
+namespace ProductCatalog.Data
 {
     public class Bundle : IProductCatalogEntry
     {

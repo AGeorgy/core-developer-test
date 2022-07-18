@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace _PROJECT.Code.ProductCatalog
+namespace ProductCatalog
 {
     public abstract class ProductCatalogBase<T>
     {

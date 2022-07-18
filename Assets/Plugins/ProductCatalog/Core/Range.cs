@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace _PROJECT.Code.ProductCatalog
+namespace ProductCatalog.Core
 {
     internal readonly struct Range<T> : IReadOnlyList<T>
     {

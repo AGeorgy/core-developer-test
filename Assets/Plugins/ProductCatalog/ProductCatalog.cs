@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using _PROJECT.Code.ProductCatalog.Data;
+using ProductCatalog.Core;
+using ProductCatalog.Data;
 
-namespace _PROJECT.Code.ProductCatalog
+namespace ProductCatalog
 {
+    /// <summary>
+    /// ProductCatalog has basic API for making any sorting and filtering and might be extended through
+    /// ProductCatalogComparers and ProductCatalogExtensions
+    /// </summary>
     public sealed class ProductCatalog : ProductCatalogBase<IProductCatalogEntry>
     {
         public ProductCatalog(ProductCatalogData productCatalogData) : base(productCatalogData.Entries)

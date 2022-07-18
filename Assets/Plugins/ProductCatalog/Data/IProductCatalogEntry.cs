@@ -1,4 +1,4 @@
-﻿namespace _PROJECT.Code.ProductCatalog.Data
+﻿namespace ProductCatalog.Data
 {
     public interface IProductCatalogEntry
     {
